@@ -21,7 +21,7 @@ pipeline {
         }
     }
 
-    stage('Build, Deploy & Push Docker Image') {
+    stage('Build, deploy & push Docker Image') {
         steps {
           script{
             dockerImage = docker.build registry
