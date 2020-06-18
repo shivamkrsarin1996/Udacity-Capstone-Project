@@ -1,4 +1,4 @@
-dockerpath="anyulled/capstone"
+dockerpath="shivam/capstone"
 
 kubectl run capstone\
     --generator=run-pod/v1\

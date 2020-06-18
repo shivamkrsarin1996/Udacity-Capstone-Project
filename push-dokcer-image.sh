@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-dockerpath=anyulled/capstone
+dockerpath=shivam/capstone
 
 echo "Docker ID and Image: $dockerpath"
 
-docker push anyulled/capstone:latest
+docker push shivam/capstone:latest
