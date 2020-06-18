@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = 'anyulled/capstone'
+        registry = 'shivam/capstone'
         registryCredential = 'dockerhub'
     }
     stages {
