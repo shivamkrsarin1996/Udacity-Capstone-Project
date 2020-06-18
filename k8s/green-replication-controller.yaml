@@ -1,0 +1,24 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: green
+  labels:
+    app: green
+spec:
+  replicas: 1
+  selector:
+    app: green
+  template:
+    metadata:
+      labels:
+        app: green
+    spec:
+      containers:
+        - name: green
+          image: anyulled/capstone
+          env:
+            - name: CAPSTONE_ENVIRONMENT
+              value: "Green Deployment"
+          ports:
+            - containerPort: 80
+              name: http-server

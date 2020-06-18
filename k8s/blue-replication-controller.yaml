@@ -1,0 +1,24 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: blue
+  labels:
+    app: blue
+spec:
+  replicas: 1
+  selector:
+    app: blue
+  template:
+    metadata:
+      labels:
+        app: blue
+    spec:
+      containers:
+        - name: blue
+          image: anyulled/capstone
+          env:
+            - name: CAPSTONE_ENVIRONMENT
+              value: "Blue Deployment"
+          ports:
+            - containerPort: 80
+              name: http-server

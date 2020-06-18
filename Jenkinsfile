@@ -1,62 +1,79 @@
 pipeline {
-  environment {
-    registry = "shivam/capstone"
-    registryCredential = 'dockerhub'
-  }
-
-  agent any 
-  
-  stages {
-    stage('Check Environment') {
-        steps {
-          echo 'Check Prerequisites'
-          sh 'docker -v'
-        }
+    agent any
+    environment {
+        registry = 'anyulled/capstone'
+        registryCredential = 'dockerhub'
     }
-
-    stage('Linting Files') {
-        steps {
-            sh 'tidy -q -e *.html'
-            sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
-        }
-    }
-
-    stage('Build, deploy & push Docker Image') {
-        steps {
-          script{
-            dockerImage = docker.build registry
-            docker.withRegistry( '', registryCredential ) {
-              dockerImage.push()
+    stages {
+        stage('Build App') {
+            steps {
+                println('compile application')
+                sh '''
+                 mvn clean package -DskipTests=true
+                '''
             }
-          }
-          
         }
-    }
-
-    stage('Deploying the app to Kubernetes Cluster') {
-        steps {
-          echo 'Creating Kubernetes Cluster'
-          withAWS(region:'us-west-2',credentials:'awscreds') {
-            dir('./') {
-              sh '''
-              aws eks --region us-west-2 update-kubeconfig --name capstone-eks-cluster
-              echo 'Kubernetes Deployment'
-              kubectl apply -f kubernetes/config/eks-auth-cm.yml
-              kubectl apply -f kubernetes/config/eks-deployment.yml
-              kubectl apply -f kubernetes/config/eks-service.yml
-              kubectl get nodes
-              kubectl get pods
-              kubectl get svc service-capstone -o yaml
-              '''
+        stage('Test') {
+            steps {
+                println(' test application')
+                sh '''
+                mvn test
+                '''
             }
-          }
+        }
+        stage('Check style') {
+            steps {
+                sh 'mvn checkstyle:checkstyle'
+            }
+        }
+        stage('Build Image') {
+            steps {
+                println('publish docker image')
+                script {
+                    dockerImage = docker.build registry + ":latest"
+                }
+            }
+        }
+        stage('Push Image') {
+            steps {
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+        stage('Deploy - Kubernetes containers') {
+            steps {
+                println('deploy to blue container & service')
+                withAWS(region:'eu-west-2', credentials:'aws-credentials') {
+                    sh 'aws eks update-kubeconfig --name capstonecluster --region eu-west-2'
+                    sh 'kubectl apply -f ./k8s/blue-replication-controller.yaml'
+                    sh 'kubectl apply -f ./k8s/green-replication-controller.yaml'
+                    sh 'kubectl apply -f ./k8s/blue-service.yaml'
+                }
+            }
+        }
+        stage('Blue/Green Deployment') {
+            steps {
+                input 'Deploy to Green Service?'
+            }
+        }
+        stage('Deploy - Green Service') {
+            steps {
+                println('deploy container to blue service')
+                withAWS(region:'eu-west-2', credentials:'aws-credentials') {
+                    sh 'kubectl apply -f ./k8s/green-service.yaml'
+                }
+            }
         }
     }
 
-    stage('Clean Up') {
-        steps {
-          sh 'docker system prune'
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true, fingerprint: true
+            junit 'target/surefire-reports/TEST-*.xml'
+            sh "docker rmi $registry:latest"
         }
     }
-  }
 }
