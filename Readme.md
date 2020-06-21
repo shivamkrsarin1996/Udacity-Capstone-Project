@@ -12,16 +12,16 @@ Project Requirements
 Installment Requirements
 In order to properly use this pipeline, the following is necessary:
 
-Active Amazon Web Services account 
-CloudFormation 
-Ubuntu Server 
-Jenkins 
-Docker 
-AWS CLI 
-Eksctl 
-Kubectl 
-Blue Ocean plugin for Jenkins 
-Pipeline-AWS plugin for Jenkins 
+Active Amazon Web Services account        
+CloudFormation                  
+Ubuntu Server                
+Jenkins                     
+Docker                    
+AWS CLI                
+Eksctl                   
+Kubectl                     
+Blue Ocean plugin for Jenkins               
+Pipeline-AWS plugin for Jenkins              
 
 References 
 Simple Blue Green Deployment in Kubernetes Using Minikube
