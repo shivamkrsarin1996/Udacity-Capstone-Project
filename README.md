@@ -1,5 +1,6 @@
 # Capstone Project - Udacity DevOps Nanodegree 
 Project Requirements
+
 Create Github repository with project code - Github repo is located in Github.txt file
 Use image repository to store Docker images - Docker images stored on Docker Hub
 Execute linting step in code pipeline - HTML lint at beginning of Jenkins pipeline
