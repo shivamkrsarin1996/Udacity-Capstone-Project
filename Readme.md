@@ -23,7 +23,7 @@ Kubectl
 Blue Ocean plugin for Jenkins               
 Pipeline-AWS plugin for Jenkins              
 
-References 
+References                          
 Simple Blue Green Deployment in Kubernetes Using Minikube
 https://medium.com/@andresaaap/simple-blue-green-deployment-in-kubernetes-using-minikube-b88907b2e267 
 Creating an Amazon EKS Cluster
