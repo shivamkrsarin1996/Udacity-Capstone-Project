@@ -1,5 +1,5 @@
 node {
-    def registry = 'kolly83/capstone'
+    def registry = 'shivam/capstone'
     stage('Checking out git repo') {
       echo 'Checkout...'
       checkout scm
