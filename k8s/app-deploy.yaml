@@ -1,15 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: capstone-app
+spec:
+  selector:
+    app: capstone-app
+  type: LoadBalancer
+  ports:
+   -  protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 31910
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udacity-capstone
+  name: capstone-app
   labels:
-    app: udacity-capstone
+    app: capstone-app
   namespace: default
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: udacity-capstone
+      app: capstone-app
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -18,12 +32,12 @@ spec:
   template:
     metadata:
       labels:
-        app: udacity-capstone
+        app: capstone-app
     spec:
       containers:
-      - image: shivam/udacity-capstone:latest
+      - image: shivam/capstone
         imagePullPolicy: Always
-        name: udacity-capstone
+        name: capstone-app
         ports:
         - containerPort: 80
           protocol: TCP
