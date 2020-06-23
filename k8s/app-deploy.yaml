@@ -21,7 +21,7 @@ spec:
         app: udacity-capstone
     spec:
       containers:
-      - image: shauryapratap/udacity-capstone:latest
+      - image: shivam/udacity-capstone:latest
         imagePullPolicy: Always
         name: udacity-capstone
         ports:
