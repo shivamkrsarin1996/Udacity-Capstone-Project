@@ -1,9 +1,5 @@
 [
     {
-        "ParameterKey": "ClusterName",
-        "ParameterValue": "EKSCluster-uzDwU3tgYLJ4"
-    },
-    {
         "ParameterKey": "StackName",
         "ParameterValue": "Capstone-Cluster"
     },
