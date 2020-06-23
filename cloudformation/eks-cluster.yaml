@@ -51,4 +51,4 @@ Outputs:
     Value: !Ref EKSCluster
     Export: 
         Name: !Sub ${StackName}-EKS
-        
+       
