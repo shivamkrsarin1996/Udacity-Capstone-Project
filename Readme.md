@@ -6,7 +6,7 @@ Project Requirements
 3.Execute linting step in code pipeline - HTML lint at beginning of Jenkins pipeline         
 4.Build a Docker container in a pipeline - Dockerfile created for both deployments          
 5.The Docker container is deployed to a Kubernetes cluster - K8 cluster deployed with CloudFormation  
-6.Use Blue/Green Deployment or a Rolling Deployment successfully - Blue/Green deployment used for this project  
+6.Use Blue/Green Deployment or a Rolling Deployment successfully - Rolling deployment used for this project  
 7.Screenshots - all project screenshots are in the screenshots folder   
 
 Installment Requirements
