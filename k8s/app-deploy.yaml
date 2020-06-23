@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udacity-capstone
+  labels:
+    app: udacity-capstone
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: udacity-capstone
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: udacity-capstone
+    spec:
+      containers:
+      - image: shauryapratap/udacity-capstone:latest
+        imagePullPolicy: Always
+        name: udacity-capstone
+        ports:
+        - containerPort: 80
+          protocol: TCP
