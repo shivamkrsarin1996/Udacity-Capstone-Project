@@ -13,7 +13,7 @@
     },
     {
         "ParameterKey": "NodeGroupName",
-        "ParameterValue": "eks-workers"
+        "ParameterValue": "udacity-workers"
     },
     {
         "ParameterKey": "NodeImageId",
