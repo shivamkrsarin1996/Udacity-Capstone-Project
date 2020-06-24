@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: udacity-capstone
+  name: capstone-app
 spec:
   selector:
-    app: udacity-capstone
+    app: capstone-app
   type: LoadBalancer
   ports:
    -  protocol: TCP
       port: 80
       targetPort: 80
+      nodePort: 31910
